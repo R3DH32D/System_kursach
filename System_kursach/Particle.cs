@@ -18,7 +18,7 @@ namespace System_kursach
 
         public float Direction;
         public float Speed;
-
+        public float n;
         public float Life;
 
         public static Random rand = new Random();
