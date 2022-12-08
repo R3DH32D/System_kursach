@@ -96,8 +96,14 @@ namespace System_kursach
         
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
-            emitter.MousePositionX = e.X;
-            emitter.MousePositionY = e.Y;
+            foreach (var emitter in emitters)
+            {
+                emitter.MousePositionX = e.X;
+                emitter.MousePositionY = e.Y;
+            }
+
+            point2.X = e.X;
+            point2.Y = e.Y;
         }
 
         private void tbDirection_Scroll(object sender, EventArgs e)

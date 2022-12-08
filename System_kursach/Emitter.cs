@@ -62,6 +62,9 @@ namespace System_kursach
                 }
                 else
                 {
+                    particle.X += particle.SpeedX;
+                    particle.Y += particle.SpeedY;
+
                     foreach (var point in impactPoints)
                     {
                         point.ImpactParticle(particle);
@@ -70,8 +73,7 @@ namespace System_kursach
                     particle.SpeedX += GravitationX;
                     particle.SpeedY += GravitationY;
 
-                    particle.X += particle.SpeedX;
-                    particle.Y += particle.SpeedY;
+                    
                 }
             }
             for (var i = 0; i < 10; ++i)
