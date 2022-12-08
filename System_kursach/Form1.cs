@@ -14,6 +14,9 @@ namespace System_kursach
     {
         List<Emitter> emitters = new List<Emitter>();
         Emitter emitter;
+
+        GravityPoint point1; 
+        GravityPoint point2; 
         public Form1()
         {
             InitializeComponent();
@@ -30,8 +33,22 @@ namespace System_kursach
                 X = picDisplay.Width / 2,
                 Y = picDisplay.Height / 2,
             };
+            point1 = new GravityPoint
+            {
+                X = picDisplay.Width / 2 + 100,
+                Y = picDisplay.Height / 2,
+            };
+            point2 = new GravityPoint
+            {
+                X = picDisplay.Width / 2 - 100,
+                Y = picDisplay.Height / 2,
+            };
 
-            emitters.Add(this.emitter);
+            
+            emitter.impactPoints.Add(point1);
+            emitter.impactPoints.Add(point2);
+
+           /* emitters.Add(this.emitter);
             emitter.impactPoints.Add(new GravityPoint
             {
                 X = picDisplay.Width/2+100 ,
@@ -93,6 +110,18 @@ namespace System_kursach
         {
             emitter.Spreading = tbSpreading.Value;
             lblSpread.Text = $"{tbSpreading.Value}°";
+        }
+
+        private void tbGraviton_Scroll(object sender, EventArgs e)
+        {
+            lblGrav.Text = $"{tbGraviton.Value}";
+            point1.Power = tbGraviton.Value;
+        }
+
+        private void tbGraviton2_Scroll(object sender, EventArgs e)
+        {
+            lblGrav2.Text = $"{tbGraviton2.Value}";
+            point2.Power = tbGraviton2.Value;
         }
     }
 }

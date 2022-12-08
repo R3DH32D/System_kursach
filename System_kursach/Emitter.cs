@@ -22,7 +22,7 @@ namespace System_kursach
         public int X; 
         public int Y; 
         public int Direction = 0; 
-        public int Spreading = 360; 
+        public int Spreading = 0; 
         public int SpeedMin = 1;
         public int SpeedMax = 10; 
         public int RadiusMin = 2; 

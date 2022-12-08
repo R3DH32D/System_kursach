@@ -19,7 +19,7 @@ namespace System_kursach
         public abstract void ImpactParticle(Particle particle);
 
         
-        public void Render(Graphics g)
+        public virtual void Render(Graphics g)
         {
             g.FillEllipse(
                     new SolidBrush(Color.Red),
@@ -32,7 +32,7 @@ namespace System_kursach
     }
     public class GravityPoint : IImpactPoint
     {
-        public int Power = 100; 
+        public int Power = 0; 
 
         
         public override void ImpactParticle(Particle particle)
@@ -43,6 +43,17 @@ namespace System_kursach
 
             particle.SpeedX += gX * Power / r2;
             particle.SpeedY += gY * Power / r2;
+        }
+        public override void Render(Graphics g)
+        {
+            
+            g.DrawEllipse(
+                   new Pen(Color.Red),
+                   X - Power / 2,
+                   Y - Power / 2,
+                   Power,
+                   Power
+               );
         }
     }
     public class AntiGravityPoint : IImpactPoint
