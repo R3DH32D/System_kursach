@@ -16,8 +16,8 @@ namespace System_kursach
         public float X;
         public float Y;
 
-        public float Direction;
-        public float Speed;
+        public float SpeedX;
+        public float SpeedY;
 
         public float Life;
 
@@ -25,8 +25,12 @@ namespace System_kursach
 
         public Particle()
         {
-            Direction = rand.Next(360);
-            Speed = 1 + rand.Next(10);
+            var direction = (double)rand.Next(360);
+            var speed = 1 + rand.Next(10);
+
+            
+            SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
+            SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
             Radius = 2 + rand.Next(10);
             Life = 20 + rand.Next(100);
         }
@@ -43,37 +47,38 @@ namespace System_kursach
             b.Dispose();
         }
     }
-}
-
-public class ParticleColorful : Particle
-{
-    // два новых поля под цвет начальный и конечный
-    public Color FromColor;
-    public Color ToColor;
-
-    // для смеси цветов
-    public static Color MixColor(Color color1, Color color2, float k)
+    public class ParticleColorful : Particle
     {
-        return Color.FromArgb(
-            (int)(color2.A * k + color1.A * (1 - k)),
-            (int)(color2.R * k + color1.R * (1 - k)),
-            (int)(color2.G * k + color1.G * (1 - k)),
-            (int)(color2.B * k + color1.B * (1 - k))
-        );
-    }
+       
+        public Color FromColor;
+        public Color ToColor;
 
-    // ну и отрисовку перепишем
-    public override void Draw(Graphics g)
-    {
-        float k = Math.Min(1f, Life / 100);
+        
+        public static Color MixColor(Color color1, Color color2, float k)
+        {
+            return Color.FromArgb(
+                (int)(color2.A * k + color1.A * (1 - k)),
+                (int)(color2.R * k + color1.R * (1 - k)),
+                (int)(color2.G * k + color1.G * (1 - k)),
+                (int)(color2.B * k + color1.B * (1 - k))
+            );
+        }
 
-        // так как k уменьшается от 1 до 0, то порядок цветов обратный
-        var color = MixColor(ToColor, FromColor, k);
-        var b = new SolidBrush(color);
+        
+        public override void Draw(Graphics g)
+        {
+            float k = Math.Min(1f, Life / 100);
 
-        g.FillEllipse(b, X - Radius, Y - Radius, Radius * 2, Radius * 2);
+            
+            var color = MixColor(ToColor, FromColor, k);
+            var b = new SolidBrush(color);
 
-        b.Dispose();
+            g.FillEllipse(b, X - Radius, Y - Radius, Radius * 2, Radius * 2);
+
+            b.Dispose();
+        }
     }
 }
-}
+
+
+
