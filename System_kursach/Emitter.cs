@@ -8,32 +8,38 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Drawing.Drawing2D;
+
 namespace System_kursach
 {
     public class Emitter
     {
         public float GravitationX = 0;
         public float GravitationY = 1;
-        List<Particle> particles = new List<Particle>();
+        public static List<Particle> particles = new List<Particle>();
+        
         public int MousePositionX;
         public int MousePositionY;
         public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
-        public int ParticlesCount = 500;
-        public int X; 
-        public int Y; 
+        public  int ParticlesCount = 500;
+        public float X; 
+        public float Y; 
         public int Direction = 0; 
-        public int Spreading = 0; 
-        public int SpeedMin = 1;
-        public int SpeedMax = 10; 
+        public int Spreading = 0;
+        public int speed = 1;
         public int RadiusMin = 2; 
         public int RadiusMax = 10;
-        public int LifeMin = 20;
-        public int LifeMax = 100;
+        public int Life = 20;
+
+        public float Radius = 10;
+
 
         public int ParticlesPerTick = 1;
 
         public Color ColorFrom = Color.White; 
-        public Color ColorTo = Color.FromArgb(0, Color.Black); 
+        public Color ColorTo = Color.FromArgb(0, Color.Black);
+        
+
         public virtual Particle CreateParticle()
         {
             var particle = new ParticleColorful();
@@ -109,9 +115,12 @@ namespace System_kursach
                 point.Render(g);
             }
         }
+        
+            
+        
         public virtual void ResetParticle(Particle particle)
         {
-            particle.Life = Particle.rand.Next(LifeMin, LifeMax);
+            particle.Life = Life;
 
             particle.X = X;
             particle.Y = Y;
@@ -120,7 +129,7 @@ namespace System_kursach
                 + (double)Particle.rand.Next(Spreading)
                 - Spreading / 2;
 
-            var speed = Particle.rand.Next(SpeedMin, SpeedMax);
+            particle.speed = speed;
 
             particle.SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
             particle.SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);

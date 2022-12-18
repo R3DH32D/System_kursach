@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Drawing.Drawing2D;
+
 namespace System_kursach
 {
     public class Particle
@@ -18,7 +20,7 @@ namespace System_kursach
 
         public float SpeedX;
         public float SpeedY;
-
+        public float speed = 1 + rand.Next(10);
         public float Life;
 
         public static Random rand = new Random();
@@ -26,7 +28,7 @@ namespace System_kursach
         public Particle()
         {
             var direction = (double)rand.Next(360);
-            var speed = 1 + rand.Next(10);
+            
 
             
             SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
