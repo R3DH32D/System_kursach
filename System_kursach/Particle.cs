@@ -42,11 +42,23 @@ namespace System_kursach
             int alpha = (int)(k * 225);
 
             var color = Color.FromArgb(alpha, Color.Black);
+            
             var b = new SolidBrush(color);
 
 
             g.FillEllipse(b, X - Radius, Y - Radius, Radius * 2, Radius * 2);
             b.Dispose();
+        }
+        public virtual void kill()
+        {
+            Radius = 0;
+            X = 0;
+            Y = 0;
+
+            SpeedX = 0;
+            SpeedY = 0;
+            speed = 0;
+            Life = 0;
         }
     }
     public class ParticleColorful : Particle
@@ -65,7 +77,19 @@ namespace System_kursach
                 (int)(color2.B * k + color1.B * (1 - k))
             );
         }
+        public override void kill()
+        {
+            Radius=0;
+            X=0;
+            Y=0;
 
+            SpeedX=0;
+            SpeedY=0;
+            speed = 0;
+            Life=0;
+        }
+
+    
         
         public override void Draw(Graphics g)
         {
@@ -73,8 +97,10 @@ namespace System_kursach
 
             
             var color = MixColor(ToColor, FromColor, k);
-            var b = new SolidBrush(color);
 
+           
+
+            var b = new SolidBrush(color);
             g.FillEllipse(b, X - Radius, Y - Radius, Radius * 2, Radius * 2);
 
             b.Dispose();

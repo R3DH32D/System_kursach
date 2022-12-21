@@ -46,6 +46,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.particlecount = new System.Windows.Forms.Label();
+            this.rbEmit = new System.Windows.Forms.RadioButton();
+            this.RbRadar = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbDirection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSpreading)).BeginInit();
@@ -61,6 +63,8 @@
             this.picDisplay.Size = new System.Drawing.Size(776, 436);
             this.picDisplay.TabIndex = 0;
             this.picDisplay.TabStop = false;
+            this.picDisplay.Click += new System.EventHandler(this.picDisplay_Click);
+            this.picDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.picDisplay_Paint);
             this.picDisplay.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picDisplay_MouseClick);
             this.picDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picDisplay_MouseMove);
             // 
@@ -211,11 +215,35 @@
             this.particlecount.TabIndex = 15;
             this.particlecount.Text = "Скорость";
             // 
+            // rbEmit
+            // 
+            this.rbEmit.AutoSize = true;
+            this.rbEmit.Checked = true;
+            this.rbEmit.Location = new System.Drawing.Point(195, 489);
+            this.rbEmit.Name = "rbEmit";
+            this.rbEmit.Size = new System.Drawing.Size(68, 17);
+            this.rbEmit.TabIndex = 16;
+            this.rbEmit.TabStop = true;
+            this.rbEmit.Text = "Эмиттер";
+            this.rbEmit.UseVisualStyleBackColor = true;
+            // 
+            // RbRadar
+            // 
+            this.RbRadar.AutoSize = true;
+            this.RbRadar.Location = new System.Drawing.Point(304, 488);
+            this.RbRadar.Name = "RbRadar";
+            this.RbRadar.Size = new System.Drawing.Size(56, 17);
+            this.RbRadar.TabIndex = 17;
+            this.RbRadar.Text = "Радар";
+            this.RbRadar.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(841, 530);
+            this.Controls.Add(this.RbRadar);
+            this.Controls.Add(this.rbEmit);
             this.Controls.Add(this.particlecount);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -235,6 +263,7 @@
             this.Name = "Form1";
             this.Text = "Honda Civic type R";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbDirection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSpreading)).EndInit();
@@ -265,6 +294,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label particlecount;
+        private System.Windows.Forms.RadioButton rbEmit;
+        private System.Windows.Forms.RadioButton RbRadar;
     }
 }
 

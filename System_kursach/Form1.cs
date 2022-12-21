@@ -14,16 +14,16 @@ namespace System_kursach
 {
     public partial class Form1 : Form
     {
-        List<Emitter> emitters = new List<Emitter>();
+        public static List<Emitter> emitters = new List<Emitter>();
+        
         Emitter emitter;
         
-        GravityPoint point1; 
-        GravityPoint point2; 
+         
         public Form1()
         {
             InitializeComponent();
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
-            this.emitter = new Emitter
+            emitters.Add(emitter = new Emitter
             {
                 Radius = 10,
                 Direction = 0,
@@ -34,50 +34,9 @@ namespace System_kursach
                 ParticlesPerTick = 10,
                 X = picDisplay.Width / 2,
                 Y = picDisplay.Height / 2,
-            };
+            });
             
-            /* point1 = new GravityPoint
-             {
-                 X = picDisplay.Width / 2 + 100,
-                 Y = picDisplay.Height / 2,
-             };
-             point2 = new GravityPoint
-             {
-                 X = picDisplay.Width / 2 - 100,
-                 Y = picDisplay.Height / 2,
-             };
-
-
-             emitter.impactPoints.Add(point1);
-             emitter.impactPoints.Add(point2);
-
-            /* emitters.Add(this.emitter);
-             emitter.impactPoints.Add(new GravityPoint
-             {
-                 X = picDisplay.Width/2+100 ,
-                 Y = picDisplay.Height / 2
-             });
-             emitter.impactPoints.Add(new GravityPoint
-             {
-                 X = picDisplay.Width/2-100 ,
-                 Y = picDisplay.Height / 2
-             }); 
-
-             /*emitter = new TopEmitter
-             {
-                 Width = picDisplay.Width,
-                 GravitationY = 0.25f
-             };
-
-
-
-
-             emitter.impactPoints.Add(new AntiGravityPoint
-             {
-                 X = picDisplay.Width / 2,
-                 Y = picDisplay.Height / 2
-             });*/
-
+           
 
 
         }
@@ -89,26 +48,20 @@ namespace System_kursach
         private void timer1_Tick(object sender, EventArgs e)
         {
             emitter.UpdateState();
-            using (var g = Graphics.FromImage(picDisplay.Image = Image.FromFile("C:\\krot.jpg")))
+            using (var g = Graphics.FromImage(picDisplay.Image = Image.FromFile("C:\\wp.jpg")))
             {
                 emitter.Render(g);
             }
 
-            particlecount.Text = "количество частиц" + Emitter.particles.Count;
+            
 
             picDisplay.Invalidate();
         }
         
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
-            /*foreach (var emitter in emitters)
-            {
-                emitter.MousePositionX = e.X;
-                emitter.MousePositionY = e.Y;
-            }
-
-            point2.X = e.X;
-            point2.Y = e.Y;*/
+            MouseX = e.X;
+            MouseY = e.Y;
         }
 
         private void tbDirection_Scroll(object sender, EventArgs e)
@@ -134,10 +87,28 @@ namespace System_kursach
             lblGrav2.Text = $"{tbGraviton2.Value}";
             emitter.Life = tbGraviton2.Value;
         }
-
+        public float MouseX;
+        public float MouseY;
         private void picDisplay_MouseClick(object sender, MouseEventArgs e)
         {
+            if (rbEmit.Checked)
+            {
+                saved = false;
+                emitters.Add(emitter = new Emitter
+                {
+                    Life = tbGraviton2.Value,
+                    Radius = 10,
+                    Direction = tbDirection.Value,
+                    Spreading = tbSpreading.Value,
+                    speed = trackBar1.Value,
+                    ColorFrom = Color.Gold,
+                    ColorTo = Color.FromArgb(0, Color.Red),
+                    ParticlesPerTick = tbGraviton.Value,
+                    X = e.X,
+                    Y = e.Y,
+                });
 
+            }
             
         }
 
@@ -149,6 +120,31 @@ namespace System_kursach
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             emitter.speed = trackBar1.Value;
+        }
+
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            
+        }
+        public static bool saved=false;
+        private void picDisplay_Paint(object sender, PaintEventArgs e)
+        {
+
+            Graphics g = e.Graphics;
+            if (RbRadar.Checked)
+            {
+                saved = true;
+                ParticleRadar.x =MouseX ;
+                ParticleRadar.y = MouseY;
+                ParticleRadar.particleInside(Emitter.particles, g);
+                ParticleRadar.Render(g);
+            }
+            particlecount.Text = "количество частиц" + Emitter.particles.Count;
+        }
+
+        private void picDisplay_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

@@ -52,55 +52,57 @@ namespace System_kursach
         public void UpdateState()
         {
             int particlesToCreate = ParticlesPerTick;
-            foreach (var particle in particles)
-            {
-                particle.Life -= 1;
-                if (particle.Life < 0)
+            
+                foreach (var particle in particles)
                 {
-
-                    ResetParticle(particle);
-                    if (particlesToCreate > 0)
+                    particle.Life -= 1;
+                    if (particle.Life < 0)
                     {
-                        
-                        particlesToCreate -= 1;
+
                         ResetParticle(particle);
-                    }
-                }
-                else
-                {
-                    particle.X += particle.SpeedX;
-                    particle.Y += particle.SpeedY;
 
-                    foreach (var point in impactPoints)
+                        if (particlesToCreate > 0)
+                        {
+
+                            particlesToCreate -= 1;
+                            ResetParticle(particle);
+                        }
+                    }
+                    else
                     {
-                        point.ImpactParticle(particle);
+                        particle.X += particle.SpeedX;
+                        particle.Y += particle.SpeedY;
+
+                        foreach (var point in impactPoints)
+                        {
+                            point.ImpactParticle(particle);
+                        }
+
+                        particle.SpeedX += GravitationX;
+                        particle.SpeedY += GravitationY;
+
+
                     }
-
-                    particle.SpeedX += GravitationX;
-                    particle.SpeedY += GravitationY;
-
-                    
                 }
-            }
-            for (var i = 0; i < 10; ++i)
-            {
-                if (particles.Count < ParticlesCount)
+                for (var i = 0; i < 10; ++i)
                 {
+                    if (particles.Count < ParticlesCount)
+                    {
 
-                    var particle = CreateParticle(); 
+                        var particle = CreateParticle();
+                        ResetParticle(particle);
+                        particles.Add(particle);
+                    }
+                    else { break; }
+                }
+                while (particlesToCreate >= 1)
+                {
+                    particlesToCreate -= 1;
+                    var particle = CreateParticle();
                     ResetParticle(particle);
                     particles.Add(particle);
                 }
-                else { break; }
             }
-            while (particlesToCreate >= 1)
-            {
-                particlesToCreate -= 1;
-                var particle = CreateParticle();
-                ResetParticle(particle);
-                particles.Add(particle);
-            }
-        }
         
         public void Render(Graphics g)
         {
