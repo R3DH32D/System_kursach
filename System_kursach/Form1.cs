@@ -46,16 +46,19 @@ namespace System_kursach
 
         }
         private void timer1_Tick(object sender, EventArgs e)
-        {
-            emitter.UpdateState();
-            using (var g = Graphics.FromImage(picDisplay.Image = Image.FromFile("C:\\wp.jpg")))
+        {   
+            foreach (var emitter in emitters)
             {
-                emitter.Render(g);
+                emitter.UpdateState();
+                using (var g = Graphics.FromImage(picDisplay.Image = Image.FromFile("C:\\wp.jpg")))
+                {
+                    emitter.Render(g);
+                }
+
+
+
+                picDisplay.Invalidate();
             }
-
-            
-
-            picDisplay.Invalidate();
         }
         
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)

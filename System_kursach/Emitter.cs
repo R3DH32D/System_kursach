@@ -21,7 +21,7 @@ namespace System_kursach
         public int MousePositionX;
         public int MousePositionY;
         public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
-        public  int ParticlesCount = 500;
+        public  int ParticlesCount = 200;
         public float X; 
         public float Y; 
         public int Direction = 0; 
